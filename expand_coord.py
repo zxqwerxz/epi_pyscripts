@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Expand the coordinate range of amplicons by n bp without overlapping.
 
@@ -13,8 +13,20 @@ Expected infile format (comma-delimited file):
     Column A: Amplicon name
     Column B: Chromosome name
     Column C: Start position
-    COlumn D: End position
+    Column D: End position
 """
+
+import argparse
+
+__author__ = 'Jeffrey Zhou'
+__copyright__ = 'Copyright (C) 2017, EpigenDx Inc.'
+__credits__ = ['Jeffrey Zhou']
+
+__version__ = '0.0.1'
+__date__ = '6-3-2017'
+__maintainer__ = 'Jeffrey Zhou'
+__email__ = 'jyzhou@epigendx.com'
+__status__ = 'Prototype'
 
 
 def print_amplicon(amplicon):
@@ -84,7 +96,6 @@ def main(infile, upstream, downstream):
 
 
 if __name__ == '__main__':
-    import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('infile',
                         metavar="amplicon_list",
