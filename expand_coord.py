@@ -7,13 +7,14 @@ coordinates and expands the coordinate range by a given number of base pairs.
 If any amplicons overlap after coordinate expansion, they will be merged.
 
 Example:
+    python expand_coord.py [in.csv] [upstream] [downstream] > [out.csv]
     python expand_coord.py infile.csv 100 100 > outfile.csv
 
 Expected infile format (comma-delimited file):
-    Column A: Amplicon name
-    Column B: Chromosome name
-    Column C: Start position
-    Column D: End position
+    Column A: Amplicon name (e.g. ADS2830)
+    Column B: Chromosome name (e.g. 3)
+    Column C: Start position (e.g. 43205)
+    Column D: End position (e.g. 43500)
 """
 
 import argparse
@@ -21,11 +22,7 @@ import argparse
 __author__ = 'Jeffrey Zhou'
 __copyright__ = 'Copyright (C) 2017, EpigenDx Inc.'
 __credits__ = ['Jeffrey Zhou']
-
 __version__ = '0.0.1'
-__date__ = '6-3-2017'
-__maintainer__ = 'Jeffrey Zhou'
-__email__ = 'jyzhou@epigendx.com'
 __status__ = 'Prototype'
 
 

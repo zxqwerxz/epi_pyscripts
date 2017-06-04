@@ -10,11 +10,11 @@ Example:
     python fetch_seq.py infile.csv human > outfile.fasta
 
 Expected infile format (comma-delimited file):
-    Column A: Desired FASTA entry name
-    Column B: Chromosome name
-    Column C: Start position
-    Column D: End position
-    Column E: Strand (Optional: If none provided, assume + strand)
+    Column A: Desired FASTA entry name (e.g. ADS2830)
+    Column B: Chromosome name (e.g. X)
+    Column C: Start position (e.g. 431000)
+    Column D: End position (e.g. 432000)
+    Column E: Strand (Optional: default to +) (e.g. -)
 
 Valid species options can be found in the ensembl website. Either the official
 alias (e.g. mouse, rat, human) or the scientific name (e.g. homo_sapiens) can
@@ -25,6 +25,7 @@ a given species.
 
 TODO:
 * Providing strand information in the infile is completely untested.
+* Error handling if queried sequence does not exist.
 
 """
 
@@ -36,11 +37,7 @@ import sys
 __author__ = 'Jeffrey Zhou'
 __copyright__ = 'Copyright (C) 2017, EpigenDx Inc.'
 __credits__ = ['Jeffrey Zhou']
-
 __version__ = '0.0.1'
-__date__ = '6-3-2017'
-__maintainer__ = 'Jeffrey Zhou'
-__email__ = 'jyzhou@epigendx.com'
 __status__ = 'Prototype'
 
 api = 'http://rest.ensembl.org/sequence/region/'
@@ -61,7 +58,7 @@ def print_seq(seq):
 
     """
     count = 0
-    buf = ""
+    buf = ''
     for c in seq:
         if count < 70:
             buf = buf + c
@@ -69,7 +66,7 @@ def print_seq(seq):
         else:
             print buf
             count = 0
-            buf = ""
+            buf = ''
     if len(buf) > 0:
         print buf
 
@@ -91,7 +88,7 @@ def main(infile, species):
     with open(infile, 'r') as f:
         for line in f:
             row = line.strip().split(',')
-            query = row[1] + ":" + row[2] + ".." + row[3]
+            query = row[1] + ':' + row[2] + '..' + row[3]
             try:
                 if row[4] == '+':
                     query = query + ':1'
@@ -125,7 +122,7 @@ def main(infile, species):
         for meta in metadata:
             if c == meta['chr'] and s == meta['start'] and e == meta['end']:
                 found = True
-                print ">" + meta['name']
+                print '>' + meta['name']
                 print_seq(str(entry['seq']))
         if not found:
             raise Exception("Unable to match sequence to original query.")
